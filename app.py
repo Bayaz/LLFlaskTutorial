@@ -1,11 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Hello Flask for Jimmy!!!'
+    return render_template('home.html')
 
-@app.route('/about')
-def about():
-    return 'This is a url shortener'
+@app.route('/your-url', methods=['GET', 'POST'])
+def your_url():
+    #python function names dont allow -
+    if request.method == 'POST':
+        return render_template('your_url.html', code=request.form['code'])
+    else:
+        return 'This is not valid'
+
